@@ -1,0 +1,57 @@
+version: "3.9"
+
+services:
+
+  baucort-database:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: CosmoyGamo
+      MYSQL_DATABASE: db_baucort
+      MYSQL_USER: baucort
+      MYSQL_PASSWORD: CosmoyGamo
+    ports:
+      - "3316:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - app-network
+
+  backend:
+    build:
+      context: ./baucortComprasBackend
+      dockerfile: baucortComprasBackend
+    container_name: baucort_compras_backend
+    restart: always
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://baucort-database:3306/db_baucort?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: baucort
+      SPRING_DATASOURCE_PASSWORD: CosmoyGamo
+      SPRING_JPA_HIBERNATE_DDL_AUTO: none
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQL8Dialect
+    depends_on:
+      - baucort-database
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+
+  frontend:
+    build:
+      context: ./baucortFrontend
+      dockerfile: baucortFrontend
+    container_name: baucort_frontend
+    restart: always
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+    networks:
+      - app-network
+
+volumes:
+  mysql_data:
+
+networks:
+  app-network:
