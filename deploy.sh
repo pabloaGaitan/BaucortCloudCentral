@@ -1,7 +1,7 @@
 #!/bin/bash
 
+cd ~/BaucortCloudCentral/baucortComprasBackend && git pull
+cd ~/BaucortCloudCentral/baucortFrontend && git pull
 cd ~/BaucortCloudCentral
-cd app/baucortComprasBackend && git pull
-cd app/baucortFrontend && git pull
 
 docker-compose up -d --build 
