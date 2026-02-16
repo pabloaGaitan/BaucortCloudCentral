@@ -1,7 +1,6 @@
 #!/bin/bash
 
-cd ~
-mkdir app
+cd ~/BaucortCloudCentral
 cd app/baucortComprasBackend && git pull
 cd app/baucortFrontend && git pull
 
