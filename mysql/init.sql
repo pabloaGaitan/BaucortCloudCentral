@@ -123,9 +123,9 @@ CREATE TABLE `detalle_cotizacion` (
   `ad_cotizacion_detalle` int NOT NULL COMMENT 'Secuencia seq_cotizacion_detalle',
   `fk_cotizacion_ad_cotizacion` int NOT NULL,
   `fk_product_ad_producto` int NOT NULL,
-  `vl_cantidad` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `vl_precio_unitario` decimal(10,2) NOT NULL,
-  `vl_subtotal` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `vl_cantidad` decimal(12,4) NOT NULL DEFAULT '0.0000',
+  `vl_precio_unitario` decimal(12,4) NOT NULL,
+  `vl_subtotal` decimal(12,4) NOT NULL DEFAULT '0.0000',
   PRIMARY KEY (`ad_cotizacion_detalle`),
   KEY `fk_det_cotizacion` (`fk_cotizacion_ad_cotizacion`),
   KEY `fk_det_producto` (`fk_product_ad_producto`),
@@ -154,9 +154,9 @@ CREATE TABLE `detalle_factura_compra` (
   `ad_detalle_factura` int NOT NULL COMMENT 'Secuencia asociada seq_detalle_factura_compra',
   `fk_factura_ad_factura` int NOT NULL,
   `fk_product_ad_producto` int NOT NULL,
-  `vl_cantidad` decimal(10,2) NOT NULL,
-  `vl_costo_unitario` decimal(10,2) NOT NULL,
-  `vl_subtotal` decimal(10,2) NOT NULL,
+  `vl_cantidad` decimal(12,4) NOT NULL,
+  `vl_costo_unitario` decimal(12,4) NOT NULL,
+  `vl_subtotal` decimal(12,4) NOT NULL,
   PRIMARY KEY (`ad_detalle_factura`),
   KEY `fk_detfac_factura` (`fk_factura_ad_factura`),
   KEY `fk_detfac_producto` (`fk_product_ad_producto`),
@@ -185,10 +185,10 @@ CREATE TABLE `detalle_pedido` (
   `ad_detalle_pedido` int NOT NULL COMMENT 'Secuencia asociada seq_detalle_pedido',
   `fk_pedido_ad_pedido` int NOT NULL,
   `fk_product_ad_producto` int NOT NULL,
-  `vl_cantidad` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `vl_cantidad` decimal(12,4) NOT NULL DEFAULT '0.0000',
   `ic_registro_activo` enum('S','N') NOT NULL DEFAULT 'S',
   `fk_proveedor_ad_proveedor` int DEFAULT NULL,
-  `vl_compra` decimal(10,2) DEFAULT '0.00',
+  `vl_compra` decimal(12,4) DEFAULT '0.0000',
   PRIMARY KEY (`ad_detalle_pedido`),
   KEY `fk_detalle_pedido_pedido` (`fk_pedido_ad_pedido`),
   KEY `fk_detalle_pedido_producto` (`fk_product_ad_producto`),
@@ -219,9 +219,9 @@ CREATE TABLE `detalles_orden_compra` (
   `ad_detalle_ordencom` int NOT NULL COMMENT 'Secuencia asociada seq_detalles_orden_compra',
   `fk_ordencom_ad_orden` int NOT NULL,
   `fk_product_ad_producto` int NOT NULL,
-  `vl_cantidad` int NOT NULL DEFAULT '0',
-  `vl_precio_unitario` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `vl_subtotal` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `vl_cantidad` decimal(12,4) NOT NULL DEFAULT '0.0000',
+  `vl_precio_unitario` decimal(12,4) NOT NULL DEFAULT '0.0000',
+  `vl_subtotal` decimal(12,4) NOT NULL DEFAULT '0.0000',
   PRIMARY KEY (`ad_detalle_ordencom`),
   KEY `fk_detord_product` (`fk_product_ad_producto`),
   KEY `fk_detord_ordencom` (`fk_ordencom_ad_orden`),
@@ -289,13 +289,13 @@ CREATE TABLE `factura_compra` (
   `fk_ordencom_ad_orden` int DEFAULT NULL,
   `ds_numero_factura` varchar(45) NOT NULL,
   `dt_fecha_factura` date NOT NULL,
-  `vl_facturado` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `vl_descuento` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `vl_impuestos` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `vl_retencion` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `vl_total` decimal(10,2) NOT NULL,
-  `vl_pagado` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `vl_saldo` decimal(10,2) NOT NULL DEFAULT '0.00',
+  `vl_facturado` decimal(12,4) NOT NULL DEFAULT '0.0000',
+  `vl_descuento` decimal(12,4) NOT NULL DEFAULT '0.0000',
+  `vl_impuestos` decimal(12,4) NOT NULL DEFAULT '0.0000',
+  `vl_retencion` decimal(12,4) NOT NULL DEFAULT '0.0000',
+  `vl_total` decimal(12,4) NOT NULL,
+  `vl_pagado` decimal(12,4) NOT NULL DEFAULT '0.0000',
+  `vl_saldo` decimal(12,4) NOT NULL DEFAULT '0.0000',
   `ds_estado_factura` enum('registrada','anulada','cancelada','cerrada') NOT NULL DEFAULT 'registrada',
   `ds_estado_pago` enum('pendiente','parcial','pagada') NOT NULL DEFAULT 'pendiente',
   `ds_observaciones` text,
@@ -332,8 +332,8 @@ CREATE TABLE `factura_compra_impuesto` (
   `ad_factura_impuesto` int NOT NULL,
   `fk_factura_ad_factura` int NOT NULL,
   `fk_tipo_impu_ad_tipo_impuesto` int NOT NULL,
-  `vl_base` decimal(10,2) NOT NULL,
-  `vl_impuesto` decimal(10,2) NOT NULL,
+  `vl_base` decimal(12,4) NOT NULL,
+  `vl_impuesto` decimal(12,4) NOT NULL,
   PRIMARY KEY (`ad_factura_impuesto`),
   KEY `fk_fci_factura` (`fk_factura_ad_factura`),
   KEY `fk_fci_impuesto` (`fk_tipo_impu_ad_tipo_impuesto`),
@@ -362,7 +362,7 @@ CREATE TABLE `historico_precios_proveedor` (
   `ad_historico` int NOT NULL COMMENT 'Secuencia asociada seq_historico_precios_proveedor',
   `fk_product_ad_producto` int NOT NULL,
   `fk_provee_ad_proveedor` int NOT NULL,
-  `vl_precio_unitario` decimal(10,2) NOT NULL,
+  `vl_precio_unitario` decimal(12,4) NOT NULL,
   `dt_fecha_precio` date NOT NULL,
   `observaciones` text,
   PRIMARY KEY (`ad_historico`),
@@ -394,9 +394,9 @@ CREATE TABLE `inventario` (
   `fk_product_ad_producto` int NOT NULL,
   `cl_tipo_movimiento` enum('entrada','salida') NOT NULL,
   `dt_movimiento` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `vl_cantidad` int NOT NULL DEFAULT '0',
-  `vl_costo_unitario` decimal(10,2) NOT NULL DEFAULT '0.00',
-  `vl_cantidad_disponible` int DEFAULT NULL COMMENT 'Solo para entradas',
+  `vl_cantidad` decimal(12,4) NOT NULL DEFAULT '0.0000',
+  `vl_costo_unitario` decimal(12,4) NOT NULL DEFAULT '0.0000',
+  `vl_cantidad_disponible` decimal(12,4) DEFAULT NULL COMMENT 'Solo para entradas',
   `fk_referencia_origen` int DEFAULT NULL COMMENT 'ID origen: compra, venta u orden',
   `observaciones` text,
   PRIMARY KEY (`ad_inventario`),
@@ -454,7 +454,7 @@ CREATE TABLE `ordenes_compra` (
   `fk_provee_ad_proveedor` int NOT NULL,
   `dt_fecha_orden` datetime NOT NULL,
   `ds_estado` enum('pendiente','completada','cancelada') DEFAULT 'pendiente',
-  `vl_total` decimal(10,2) NOT NULL,
+  `vl_total` decimal(12,4) NOT NULL,
   `ds_metodo_pago` enum('efectivo','tarjeta','transferencia','otro') DEFAULT 'tarjeta',
   `dt_fecha_entrega` date DEFAULT NULL,
   `observaciones` text,
@@ -756,7 +756,7 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_agregar_impuesto_factura_compra`(
     IN p_fk_factura_ad_factura INT,
     IN p_fk_tipo_impuesto INT,
-    IN p_vl_impuesto DECIMAL(10,2),
+    IN p_vl_impuesto DECIMAL(12,4),
     OUT p_mensaje VARCHAR(255)
 )
 proc: BEGIN
@@ -859,11 +859,11 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_cerrar_factura_compra`(
     OUT p_mensaje VARCHAR(255)
 )
 proc: BEGIN
-    DECLARE v_facturado DECIMAL(10,2) DEFAULT 0;
-    DECLARE v_descuento DECIMAL(10,2) DEFAULT 0;
-    DECLARE v_impuestos DECIMAL(10,2) DEFAULT 0;
-    DECLARE v_retencion DECIMAL(10,2) DEFAULT 0;
-    DECLARE v_total DECIMAL(10,2) DEFAULT 0;
+    DECLARE v_facturado DECIMAL(12,4) DEFAULT 0;
+    DECLARE v_descuento DECIMAL(12,4) DEFAULT 0;
+    DECLARE v_impuestos DECIMAL(12,4) DEFAULT 0;
+    DECLARE v_retencion DECIMAL(12,4) DEFAULT 0;
+    DECLARE v_total DECIMAL(12,4) DEFAULT 0;
     DECLARE v_estado VARCHAR(20);
     DECLARE v_existe INT DEFAULT 0;
     DECLARE v_error TEXT;
@@ -1149,7 +1149,7 @@ proc: BEGIN
 	DECLARE v_sucursal INT;
     DECLARE v_estado_pedido ENUM('abierto','cerrado');
     DECLARE v_proveedor INT;
-    DECLARE v_total DECIMAL(10,2);
+    DECLARE v_total DECIMAL(12,4);
     DECLARE v_ad_orden INT;
     DECLARE fin INT DEFAULT 0;
     DECLARE v_error TEXT;
@@ -1858,8 +1858,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_gestionar_detalle_cotizacion`(
     IN p_ad_cotizacion_detalle INT,
     IN p_fk_cotizacion_ad_cotizacion INT,
     IN p_fk_product_ad_producto INT,
-    IN p_vl_cantidad DECIMAL(10,2),
-    IN p_vl_precio_unitario DECIMAL(10,2),
+    IN p_vl_cantidad DECIMAL(12,4),
+    IN p_vl_precio_unitario DECIMAL(12,4),
     OUT p_mensaje VARCHAR(255)
 )
 proc: BEGIN
@@ -2008,8 +2008,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_gestionar_detalle_factura_compra
     IN p_ad_detalle_factura INT,
     IN p_fk_factura_ad_factura INT,
     IN p_fk_product_ad_producto INT,
-    IN p_vl_cantidad DECIMAL(10,2),
-    IN p_vl_costo_unitario DECIMAL(10,2),
+    IN p_vl_cantidad DECIMAL(12,4),
+    IN p_vl_costo_unitario DECIMAL(12,4),
     OUT p_mensaje VARCHAR(255)
 )
 proc: BEGIN
@@ -2111,14 +2111,14 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_gestionar_detalle_orden_compra`(
     IN p_ad_detalle_ordencom INT,
     IN p_fk_ordencom_ad_orden INT,
     IN p_fk_product_ad_producto INT,
-    IN p_vl_cantidad INT,
-    IN p_vl_precio_unitario DECIMAL(10,2),
+    IN p_vl_cantidad DECIMAL(12,4),
+    IN p_vl_precio_unitario DECIMAL(12,4),
     OUT p_mensaje VARCHAR(255)
 )
 proc: BEGIN
     DECLARE v_existente INT DEFAULT 0;
     DECLARE v_ad_detalle_ordencom INT DEFAULT 0;
-    DECLARE v_subtotal DECIMAL(10,2);
+    DECLARE v_subtotal DECIMAL(12,4);
     DECLARE v_error TEXT;
     DECLARE v_fk_proveedor INT;
 
@@ -2294,9 +2294,9 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_gestionar_detalle_pedido`(
     IN p_ad_detalle_pedido INT,
     IN p_fk_pedido_ad_pedido INT,
     IN p_fk_product_ad_producto INT,
-    IN p_vl_cantidad DECIMAL(10,2),
+    IN p_vl_cantidad DECIMAL(12,4),
     IN p_fk_proveedor_ad_proveedor INT,
-    IN p_vl_compra DECIMAL(10,2),
+    IN p_vl_compra DECIMAL(12,4),
     IN p_ic_registro_activo CHAR(1),
     OUT p_mensaje VARCHAR(255)
 )
@@ -2648,11 +2648,11 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_gestionar_factura_compra`(
     IN p_ad_factura INT,
     IN p_ds_numero_factura VARCHAR(45),
     IN p_dt_fecha_factura DATE,
-    IN p_vl_facturado DECIMAL(10,2),
-    IN p_vl_descuento DECIMAL(10,2),
-    IN p_vl_impuestos DECIMAL(10,2),
-    IN p_vl_retencion DECIMAL(10,2),
-    IN p_vl_total DECIMAL(10,2),
+    IN p_vl_facturado DECIMAL(12,4),
+    IN p_vl_descuento DECIMAL(12,4),
+    IN p_vl_impuestos DECIMAL(12,4),
+    IN p_vl_retencion DECIMAL(12,4),
+    IN p_vl_total DECIMAL(12,4),
     IN p_ds_observaciones TEXT,
     IN p_ic_cuenta_cobro VARCHAR(1),
     OUT p_mensaje VARCHAR(255)
@@ -2750,7 +2750,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `sp_gestionar_orden_compra`(
     IN p_fk_provee_ad_proveedor INT,
     IN p_dt_fecha_orden DATETIME,
     IN p_ds_estado ENUM('pendiente','completada','cancelada'),
-    IN p_vl_total DECIMAL(10,2),
+    IN p_vl_total DECIMAL(12,4),
     IN p_ds_metodo_pago ENUM('efectivo','tarjeta','transferencia','otro'),
     IN p_dt_fecha_entrega DATE,
     IN p_observaciones TEXT,
@@ -3770,7 +3770,7 @@ proc: BEGIN
     DECLARE v_ad_factura INT;
     DECLARE v_existe INT DEFAULT 0;
     DECLARE v_error TEXT;
-    DECLARE v_total_detalle DECIMAL(10,2) DEFAULT 0;
+    DECLARE v_total_detalle DECIMAL(12,4) DEFAULT 0;
 
     /* ============ MANEJO DE ERRORES ============ */
     DECLARE EXIT HANDLER FOR SQLEXCEPTION
@@ -3963,4 +3963,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-02-14 20:50:11
+-- Dump completed on 2026-02-16 17:33:19
