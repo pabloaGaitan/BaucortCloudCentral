@@ -19,7 +19,7 @@
           - app-network                                                                                                         
                                                                                                                                 
       backend:                                                                                                                  
-        image: tu_usuario_docker/baucort-backend:latest # <--- Tu imagen de Docker Hub                                          
+        image: baucortcloud/baucort-backend:latest # <--- Tu imagen de Docker Hub                                          
         container_name: baucort_compras_backend                                                                                 
         restart: always                                                                                                         
         environment:                                                                                                            
@@ -37,7 +37,7 @@
           - app-network                                                                                                         
                                                                                                                                 
       frontend:                                                                                                                 
-        image: tu_usuario_docker/baucort-frontend:latest # <--- Tu imagen de Docker Hub                                         
+        image: baucortcloud/baucort-frontend:latest # <--- Tu imagen de Docker Hub                                         
         container_name: baucort_frontend                                                                                        
         restart: always                                                                                                         
         depends_on:                                                                                                             
